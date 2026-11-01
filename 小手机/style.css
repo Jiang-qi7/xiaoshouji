@@ -9,7 +9,7 @@
   --text-dark: #152233;
   --text-light: #546b8c;
   --glass-bg: rgba(255, 255, 255, 0.68);
-  --glass-border: rgba(255,255,255,0.85);
+  --glass-border: rgba(255, 255, 255, 0.85);
   --shadow: 0 4px 16px rgba(26, 71, 128, 0.10);
   --radius: 20px;
   --transition: 0.28s ease-out;
@@ -43,7 +43,7 @@ body {
   overflow: hidden;
   background: var(--bg-color);
   border-radius: 36px;
-  box-shadow: 0 10px 30px rgba(20,40,70,0.15);
+  box-shadow: 0 10px 30px rgba(20, 40, 70, 0.15);
 }
 
 .screen {
@@ -127,7 +127,7 @@ body {
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border:1px solid rgba(255,255,255,0.75);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 18px 8px;
@@ -174,7 +174,7 @@ body {
   right: 0;
   z-index: 99;
   padding: 10px 16px;
-  background: rgba(255,255,255,0.72);
+  background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -255,16 +255,16 @@ body {
   right: 12px;
   display: flex;
   gap: 10px;
-  padding:8px;
-  background: rgba(255,255,255,0.72);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
-  border-radius:24px;
+  border-radius: 24px;
 }
 
 #chat-input {
   flex: 1;
   border: none;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 24px;
   padding: 12px 18px;
   font-size: 15px;
@@ -289,8 +289,15 @@ body {
 }
 
 @keyframes dotJump {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 /* =====表单通用样式===== */
@@ -315,7 +322,7 @@ body {
   background: var(--glass-bg);
   backdrop-filter: blur(6px);
   font-size: 15px;
-  border:1px solid rgba(255,255,255,0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 .form-item textarea {
@@ -345,7 +352,7 @@ body {
   margin: 10px 0;
   font-size: 14px;
   color: var(--text-light);
-  border:1px solid rgba(255,255,255,0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 /* 相册网格 */
@@ -359,8 +366,8 @@ body {
 .album-item img {
   width: 100%;
   border-radius: 10px;
-  aspect-ratio:1;
-  object-fit:cover;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
 /* 通话简易UI */
@@ -410,7 +417,7 @@ body {
   border-radius: 14px;
   padding: 12px;
   margin: 8px 0;
-  border:1px solid rgba(255,255,255,0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 /* 页面内边距适配，避开固定header */
@@ -419,24 +426,26 @@ body {
 }
 
 /* ========== 大屏电脑端额外微调 ========== */
-@media (min-width:768px){
-  body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
+@media (min-width:768px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  #phone-wrap{
-    min-height:auto;
-    height:92vh;
+
+  #phone-wrap {
+    min-height: auto;
+    height: 92vh;
   }
 }
 
 /* ========== 小手机（360以下）适配 ========== */
-@media (max-width:360px){
-  .lock-time{
-    font-size:56px;
+@media (max-width:360px) {
+  .lock-time {
+    font-size: 56px;
   }
-  .home-grid{
-    gap:10px;
+
+  .home-grid {
+    gap: 10px;
   }
 }
