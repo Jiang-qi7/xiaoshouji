@@ -3,9 +3,57 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
   <title>蓝调私机</title>
   <link rel="stylesheet" href="./style.css">
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #phone-wrap {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .screen {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+    /* 滚动盒子单独优化顺滑滚动 */
+    #chat-box, #moments-list, #memory-list, #wb-list, #note-list, #call-log, #music-list {
+      -webkit-overflow-scrolling: touch;
+    }
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+      font-size: 16px !important; /* 防止苹果双击放大输入框 */
+    }
+  </style>
 </head>
 
 <body>
