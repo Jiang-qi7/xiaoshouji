@@ -226,7 +226,7 @@ function localKeywordReply(userText) {
   return "(本地模式暂无匹配关键词，请在接口页面填写关键词规则或切换API模式)";
 }
 
-// 真实OpenAI兼容API请求
+// 真实OpenAI兼容API请求【修复完成，无cfgUrl】
 async function fetchAiReply(userInput) {
   const cfg = appState.apiConfig;
   if (!cfg.url || !cfg.key || !cfg.model) throw new Error("接口配置不全");
@@ -266,7 +266,6 @@ async function fetchAiReply(userInput) {
   const json = await resp.json();
   return json.choices?.[0]?.message?.content || "无返回内容";
 }
-
 
 // 发送消息
 async function sendChatMessage() {
@@ -553,7 +552,7 @@ async function renderAlbum() {
   }
 }
 
-// ===================== 【补全2】音乐播放器模块 =====================
+// ===================== 【补全2】音乐播放器模块（修复上下首） =====================
 let audioIns = null;
 $("#music-file-input").addEventListener("change", async e => {
   const files = Array.from(e.target.files);
@@ -595,6 +594,7 @@ async function playMusicIndex(idx) {
   const url = URL.createObjectURL(blob);
   if (audioIns) audioIns.pause();
   audioIns = new Audio(url);
+  audioIns.dataset.mid = item.id;
   $("#music-title").innerText = item.name;
   audioIns.play();
   audioIns.addEventListener("timeupdate", () => {
@@ -608,8 +608,18 @@ $("#music-play").addEventListener("click", () => {
   if (audioIns.paused) audioIns.play();
   else audioIns.pause();
 })
-$("#music-prev").addEventListener("click", async () => {/*简易上一首，可自行扩展*/ })
-$("#music-next").addEventListener("click", async () => {/*简易下一首，可自行扩展*/ })
+$("#music-prev").addEventListener("click", async () => {
+  if (!audioIns || appState.musicList.length === 0) return;
+  let idx = appState.musicList.findIndex(x => x.id === audioIns.dataset.mid);
+  idx = idx <= 0 ? appState.musicList.length - 1 : idx - 1;
+  playMusicIndex(idx);
+})
+$("#music-next").addEventListener("click", async () => {
+  if (!audioIns || appState.musicList.length === 0) return;
+  let idx = appState.musicList.findIndex(x => x.id === audioIns.dataset.mid);
+  idx = idx >= appState.musicList.length - 1 ? 0 : idx + 1;
+  playMusicIndex(idx);
+})
 $("#music-progress").addEventListener("input", () => {
   if (!audioIns || !audioIns.duration) return;
   audioIns.currentTime = (Number($("#music-progress").value) / 100) * audioIns.duration;
