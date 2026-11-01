@@ -1,5 +1,4 @@
-// app.js 蓝调私机【完整版】补全相册/音乐/朋友圈/通话/备忘/名片/真实API请求
-// 存储层封装 localStorage(文字) IndexedDB(图片音频二进制)
+// app.js 适配当前这份HTML，修复锁屏时钟+解锁跳转
 const $ = s => document.querySelector(s);
 
 // ===================== IndexedDB 二进制存储封装 图片、音频 =====================
@@ -143,16 +142,20 @@ document.querySelectorAll("[data-goto]").forEach(el => {
   })
 })
 
-// ===================== 锁屏时间更新 =====================
+// ===================== 锁屏时间更新【修复！】 =====================
 function updateLockClock() {
   const now = new Date();
-  $("#lock-time").innerText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  $("#lock-date").innerText = now.toLocaleDateString("zh-CN", {
-    year: "numeric", month: "long", day: "numeric", weekday: "short"
+  const lockTimeDom = $("#lock-time");
+  const lockDateDom = $("#lock-date");
+  if(!lockTimeDom || !lockDateDom) return;
+  lockTimeDom.innerText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  lockDateDom.innerText = now.toLocaleDateString("zh-CN", {
+    year: "numeric", month: "2-digit", day: "2-digit"
   });
 }
 setInterval(updateLockClock, 1000);
 updateLockClock();
+// 锁屏点击解锁
 $("#lock-screen").addEventListener("click", () => goScreen("home-screen"));
 
 // ===================== HTML转义，防止XSS =====================
@@ -226,7 +229,7 @@ function localKeywordReply(userText) {
   return "(本地模式暂无匹配关键词，请在接口页面填写关键词规则或切换API模式)";
 }
 
-// 真实OpenAI兼容API请求【修复完成，无cfgUrl】
+// 真实OpenAI兼容API请求
 async function fetchAiReply(userInput) {
   const cfg = appState.apiConfig;
   if (!cfg.url || !cfg.key || !cfg.model) throw new Error("接口配置不全");
@@ -462,7 +465,7 @@ function fillApiUI() {
   $("#api-mode").value = appState.apiConfig.mode || "local";
   $("#api-url").value = appState.apiConfig.url || "";
   $("#api-model").value = appState.apiConfig.model || "";
-  $("#api-key").value = ""; // 强制密钥框每次打开都为空，不从本地存储读密钥
+  $("#api-key").value = "";
   $("#api-temp").value = appState.apiConfig.temp ?? 1.0;
   $("#api-temp-val").innerText = String($("#api-temp").value);
 }
@@ -514,7 +517,7 @@ $("#set-save").addEventListener("click", () => {
   alert("设置已保存");
 })
 
-// ===================== 【补全1】相册模块 =====================
+// ===================== 相册模块 =====================
 $("#album-file-input").addEventListener("change", async e => {
   const files = Array.from(e.target.files);
   for (const f of files) {
@@ -552,7 +555,7 @@ async function renderAlbum() {
   }
 }
 
-// ===================== 【补全2】音乐播放器模块（修复上下首） =====================
+// ===================== 音乐播放器模块 =====================
 let audioIns = null;
 $("#music-file-input").addEventListener("change", async e => {
   const files = Array.from(e.target.files);
@@ -625,7 +628,7 @@ $("#music-progress").addEventListener("input", () => {
   audioIns.currentTime = (Number($("#music-progress").value) / 100) * audioIns.duration;
 })
 
-// =====================【补全3】朋友圈模块 =====================
+// ===================== 朋友圈模块 =====================
 $("#moments-add").addEventListener("click", () => {
   const text = prompt("输入朋友圈动态内容：");
   if (!text) return;
@@ -665,7 +668,7 @@ function renderMoments() {
   })
 }
 
-// =====================【补全4】通话模块 =====================
+// ===================== 通话模块 =====================
 $("#call-accept").addEventListener("click", () => {
   if (appState.callRunning) return;
   appState.callRunning = true;
@@ -707,7 +710,7 @@ function renderCallLog() {
   })
 }
 
-// =====================【补全5】备忘模块 =====================
+// ===================== 备忘模块 =====================
 $("#note-add").addEventListener("click", () => {
   const cont = prompt("新建备忘内容");
   if (!cont) return;
@@ -743,7 +746,7 @@ function renderNotes() {
   })
 }
 
-// =====================【补全6】角色名片模块 =====================
+// ===================== 角色名片模块 =====================
 function fillCardUI() {
   $("#card-name").value = appState.cardInfo.name || "";
   $("#card-birthday").value = appState.cardInfo.birthday || "";
@@ -795,7 +798,6 @@ $("#backup-import-file").addEventListener("change", async evt => {
   try {
     const raw = await f.text();
     const data = JSON.parse(raw);
-    // 恢复文字数据
     appState.chatList = data.chatList ?? [];
     appState.memoryList = data.memoryList ?? [];
     appState.charCard = data.charCard ?? {};
@@ -816,11 +818,9 @@ $("#backup-import-file").addEventListener("change", async evt => {
     safeSetLS("rp_notes", appState.notes);
     safeSetLS("rp_callLogs", appState.callLogs);
     safeSetLS("rp_cardInfo", appState.cardInfo);
-    // 恢复媒体文件
     if (Array.isArray(data.media)) {
       for (const m of data.media) await mediaPut(m);
     }
-    // 刷新全部界面
     renderChat(); renderMemoryList(); renderWorldBook(); fillCharCardUI(); fillApiUI(); fillSettingUI();
     await renderAlbum(); await renderMusicList(); renderMoments(); renderCallLog(); renderNotes(); fillCardUI();
     updateBackupStat();
