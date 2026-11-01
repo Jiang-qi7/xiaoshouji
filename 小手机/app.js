@@ -247,12 +247,7 @@ async function fetchAiReply(userInput) {
   })
   messages.push({ role: "user", content: userInput });
 
-  let apiUrl = cfg.url;
-  if (!apiUrl.endsWith("/v1/chat/completions")) {
-    if (apiUrl.endsWith("/v1")) apiUrl += "/chat/completions";
-    else apiUrl = apiUrl.replace(/\/?$/, "/v1/chat/completions");
-  }
-
+ 
   const resp = await fetch(apiUrl, {
     method: "POST",
     headers: {
