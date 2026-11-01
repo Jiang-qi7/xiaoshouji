@@ -247,9 +247,7 @@ async function fetchAiReply(userInput) {
   })
   messages.push({ role: "user", content: userInput });
 
- 
-  const cfg = appState.apiConfig;
-const resp = await fetch(cfg.url, {
+  const resp = await fetch(cfg.url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -268,6 +266,7 @@ const resp = await fetch(cfg.url, {
   const json = await resp.json();
   return json.choices?.[0]?.message?.content || "无返回内容";
 }
+
 
 // 发送消息
 async function sendChatMessage() {
