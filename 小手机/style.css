@@ -390,3 +390,86 @@ body {
   padding: 12px;
   margin: 8px 0;
 }
+
+.screen {
+  display: none;
+  padding: 16px;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.screen.active {
+  display: block;
+}
+.page-header {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  max-width: 430px;
+  margin: 0 auto;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+  z-index: 99;
+  padding: 0 12px;
+}
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:16px;
+  padding: 60px 20px 20px;
+}
+.app-icon {
+  text-align:center;
+  padding:10px;
+}
+.app-symbol {
+  font-size: 36px;
+  margin-bottom:4px;
+}
+.form-item {
+  margin-bottom:14px;
+}
+.form-item label {
+  display:block;
+  margin-bottom:4px;
+}
+input, textarea, select {
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+.btn-block {
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:10px;
+  border:none;
+}
+.input-bar {
+  display:flex;
+  gap:8px;
+  position:fixed;
+  bottom: env(safe-area-inset-bottom);
+  left:0;
+  right:0;
+  max-width:430px;
+  margin:0 auto;
+  padding:8px 12px;
+  background:#000;
+}
+#chat-box {
+  padding-bottom:70px;
+}
+.album-grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:8px;
+}
+.album-item img {
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+}
