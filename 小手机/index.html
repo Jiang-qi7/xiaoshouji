@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>蓝调私机</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="phone-wrap">
+
+    <!-- ========== 锁屏 ========== -->
+    <section id="lock-screen" class="screen active">
+      <div class="lock-glass">
+        <div class="lock-time" id="lock-time">00:00</div>
+        <div class="lock-date" id="lock-date">2026-01-01</div>
+        <div class="lock-tip">晚风漫过窗沿。</div>
+      </div>
+      <div class="tap-hint">点击屏幕解锁</div>
+    </section>
+
+    <!-- ========== 桌面主页 ========== -->
+    <section id="home-screen" class="screen">
+      <div class="home-grid">
+        <div class="app-icon" data-goto="screen-msg">
+          <div class="app-symbol">💬</div>
+          <div class="app-name">消息</div>
+        </div>
+        <div class="app-icon" data-goto="screen-moments">
+          <div class="app-symbol">📋</div>
+          <div class="app-name">朋友圈</div>
+        </div>
+        <div class="app-icon" data-goto="screen-album">
+          <div class="app-symbol">🖼</div>
+          <div class="app-name">相册</div>
+        </div>
+        <div class="app-icon" data-goto="screen-call">
+          <div class="app-symbol">📞</div>
+          <div class="app-name">通话</div>
+        </div>
+        <div class="app-icon" data-goto="screen-music">
+          <div class="app-symbol">🎵</div>
+          <div class="app-name">音乐</div>
+        </div>
+        <div class="app-icon" data-goto="screen-note">
+          <div class="app-symbol">📝</div>
+          <div class="app-name">备忘</div>
+        </div>
+        <div class="app-icon" data-goto="screen-card">
+          <div class="app-symbol">👤</div>
+          <div class="app-name">名片</div>
+        </div>
+        <div class="app-icon" data-goto="screen-memory">
+          <div class="app-symbol">📜</div>
+          <div class="app-name">记忆</div>
+        </div>
+        <div class="app-icon" data-goto="screen-character">
+          <div class="app-symbol">🎭</div>
+          <div class="app-name">人设卡</div>
+        </div>
+        <div class="app-icon" data-goto="screen-worldbook">
+          <div class="app-symbol">📖</div>
+          <div class="app-name">世界书</div>
+        </div>
+        <div class="app-icon" data-goto="screen-api">
+          <div class="app-symbol">🔌</div>
+          <div class="app-name">接口</div>
+        </div>
+        <div class="app-icon" data-goto="screen-backup">
+          <div class="app-symbol">💾</div>
+          <div class="app-name">备份</div>
+        </div>
+        <div class="app-icon" data-goto="screen-setting">
+          <div class="app-symbol">⚙</div>
+          <div class="app-name">设置</div>
+        </div>
+      </div>
+      <div class="home-footer">蓝调私机 · 仅你可见</div>
+    </section>
+
+    <!-- ========== 消息聊天页面 ========== -->
+    <section id="screen-msg" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <div class="chat-header-info">
+          <div id="chat-title">角色</div>
+          <div class="chat-status">在线</div>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box"></div>
+      <div class="input-bar">
+        <input id="chat-input" placeholder="输入消息……">
+        <button class="btn-send" id="btn-send">发送</button>
+      </div>
+    </section>
+
+    <!-- ========== 朋友圈页面 ========== -->
+    <section id="screen-moments" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>朋友圈</h3>
+      </div>
+      <div id="moments-list"></div>
+      <button class="btn-block" id="moments-add">新建动态</button>
+    </section>
+
+    <!-- ========== 相册页面 ========== -->
+    <section id="screen-album" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>相册</h3>
+      </div>
+      <input type="file" accept="image/*" multiple id="album-file-input">
+      <div id="album-grid" class="album-grid"></div>
+    </section>
+
+    <!-- ========== 通话页面 ========== -->
+    <section id="screen-call" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>通话</h3>
+      </div>
+      <div class="call-ui">
+        <div class="call-avatar">角</div>
+        <div class="call-name">角色</div>
+        <div class="call-timer" id="call-timer">00:00</div>
+        <div class="call-btns">
+          <button class="btn-ok" id="call-accept">接通</button>
+          <button class="btn-danger" id="call-hang">挂断</button>
+        </div>
+      </div>
+      <h4>通话记录</h4>
+      <div id="call-log"></div>
+    </section>
+
+    <!-- ========== 音乐页面 ========== -->
+    <section id="screen-music" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>音乐</h3>
+      </div>
+      <input type="file" accept="audio/*" multiple id="music-file-input">
+      <div class="music-player">
+        <div id="music-title">未选择歌曲</div>
+        <input type="range" id="music-progress" min="0" max="100" value="0">
+        <div class="music-ctrl">
+          <button id="music-prev">上一首</button>
+          <button id="music-play">播放/暂停</button>
+          <button id="music-next">下一首</button>
+        </div>
+      </div>
+      <div id="music-list"></div>
+    </section>
+
+    <!-- ========== 备忘页面 ========== -->
+    <section id="screen-note" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>备忘</h3>
+      </div>
+      <button class="btn-block" id="note-add">新建备忘</button>
+      <div id="note-list"></div>
+    </section>
+
+    <!-- ========== 名片页面 ========== -->
+    <section id="screen-card" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>角色名片</h3>
+      </div>
+      <div class="form-item">
+        <label>名字</label>
+        <input id="card-name">
+      </div>
+      <div class="form-item">
+        <label>生日</label>
+        <input id="card-birthday">
+      </div>
+      <div class="form-item">
+        <label>星座</label>
+        <input id="card-zodiac">
+      </div>
+      <div class="form-item">
+        <label>爱好</label>
+        <input id="card-hobby">
+      </div>
+      <div class="form-item">
+        <label>签名</label>
+        <textarea id="card-sign"></textarea>
+      </div>
+      <button class="btn-block" id="card-save">保存名片</button>
+    </section>
+
+    <!-- ========== 记忆页面 ========== -->
+    <section id="screen-memory" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>长期记忆</h3>
+      </div>
+      <div class="form-item">
+        <label>记忆内容</label>
+        <textarea id="memory-input"></textarea>
+      </div>
+      <button class="btn-block" id="memory-add">新增一条记忆</button>
+      <div id="memory-list"></div>
+    </section>
+
+    <!-- ========== 人设卡页面 ========== -->
+    <section id="screen-character" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>人设卡</h3>
+      </div>
+      <div class="form-item">
+        <label>角色名字</label>
+        <input id="char-name">
+      </div>
+      <div class="form-item">
+        <label>如何称呼我</label>
+        <input id="char-call-me">
+      </div>
+      <div class="form-item">
+        <label>性格说话方式</label>
+        <textarea id="char-persona"></textarea>
+      </div>
+      <div class="form-item">
+        <label>口头禅</label>
+        <input id="char-catch">
+      </div>
+      <div class="form-item">
+        <label>雷区，绝不说的话</label>
+        <textarea id="char-ban"></textarea>
+      </div>
+      <div class="form-item">
+        <label>开场第一句</label>
+        <textarea id="char-hello"></textarea>
+      </div>
+      <button class="btn-block" id="char-save">保存人设卡</button>
+      <input type="file" id="char-import-file" accept=".json,.txt">
+      <button class="btn-block" id="char-import">导入角色卡</button>
+    </section>
+
+    <!-- ========== 世界书页面 ========== -->
+    <section id="screen-worldbook" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>世界书</h3>
+      </div>
+      <button class="btn-block" id="wb-add">新建条目</button>
+      <input type="file" id="wb-import-file" accept=".json">
+      <button class="btn-block" id="wb-import">导入JSON</button>
+      <button class="btn-block" id="wb-export">导出JSON</button>
+      <div id="wb-list"></div>
+    </section>
+
+    <!-- ========== 接口页面 ========== -->
+    <section id="screen-api" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>模型接口</h3>
+      </div>
+      <div class="form-item">
+        <label>运行模式</label>
+        <select id="api-mode">
+          <option value="local">本地关键词模式</option>
+          <option value="api">API接口模式</option>
+        </select>
+      </div>
+      <div class="form-item">
+        <label>接口地址</label>
+        <input id="api-url" placeholder="https://xxx/v1">
+      </div>
+      <div class="form-item">
+        <label>模型名称</label>
+        <input id="api-model">
+      </div>
+      <div class="form-item">
+        <label>密钥sk-...</label>
+        <input id="api-key">
+      </div>
+      <div class="form-item">
+        <label>随机性 temperature</label>
+        <input type="range" id="api-temp" min="0" max="2" step="0.1" value="1.0">
+        <span id="api-temp-val">1.0</span>
+      </div>
+      <button class="btn-block" id="api-save">保存接口配置</button>
+      <button class="btn-block" id="api-test">测试连接</button>
+      <div id="api-test-result"></div>
+    </section>
+
+    <!-- ========== 备份页面 ========== -->
+    <section id="screen-backup" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>备份与恢复</h3>
+      </div>
+      <div class="info-box">
+        <p>所有数据保存在浏览器本地，清除缓存会丢失，请定期导出备份。备份文件包含密钥，不要转发他人。</p>
+      </div>
+      <div id="backup-stat"></div>
+      <button class="btn-block" id="backup-export">导出全部备份JSON</button>
+      <input type="file" id="backup-import-file" accept=".json">
+      <button class="btn-block" id="backup-import">导入备份文件</button>
+      <button class="btn-danger btn-block" id="backup-clear">清空全部本地数据（二次确认）</button>
+    </section>
+
+    <!-- ========== 设置页面 ========== -->
+    <section id="screen-setting" class="screen">
+      <div class="page-header">
+        <button class="btn-back" data-goto="home-screen">← 返回</button>
+        <h3>设置</h3>
+      </div>
+      <div class="form-item">
+        <label>角色显示名字</label>
+        <input id="set-char-name">
+      </div>
+      <div class="form-item">
+        <label>桌面底部小字</label>
+        <input id="set-footer-text">
+      </div>
+      <div class="form-item">
+        <label>聊天上下文携带条数</label>
+        <input type="number" id="set-ctx-count" value="12">
+      </div>
+      <div class="form-item">
+        <label>开启旧聊天压缩摘要</label>
+        <input type="checkbox" id="set-compress">
+      </div>
+      <div class="form-item">
+        <label>记忆条数上限</label>
+        <input type="number" id="set-mem-max" value="30">
+      </div>
+      <button class="btn-block" id="set-save">保存设置</button>
+    </section>
+
+  </div>
+  <script src="./app.js"></script>
+</body>
+
+</html>
