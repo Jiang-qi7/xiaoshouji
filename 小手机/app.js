@@ -248,7 +248,7 @@ async function fetchAiReply(userInput) {
   messages.push({ role: "user", content: userInput });
 
  
-  const resp = await fetch(apiUrl, {
+  const resp = await fetch(cfgUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
