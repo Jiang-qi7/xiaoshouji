@@ -1,18 +1,20 @@
-/* ========== CSS变量｜雾蓝玻璃主题 ========== */
+/* ========== CSS变量｜雾蓝玻璃亮色主题（自适应版） ========== */
 :root {
-  --bg-color: #e8f0f9;
-  /*雾浅蓝底色*/
+  --bg-color: #f6f9fd;
+  /* 全局亮底色 */
   --main-color: #1a4780;
-  /*深海蓝主色*/
+  /* 深海蓝主色 */
   --accent-color: #e6edf7;
-  /*月光银点缀*/
+  /* 月光银点缀 */
   --text-dark: #152233;
   --text-light: #546b8c;
-  --glass-bg: rgba(255, 255, 255, 0.42);
-  --shadow: 0 4px 14px rgba(26, 71, 128, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.68);
+  --glass-border: rgba(255,255,255,0.85);
+  --shadow: 0 4px 16px rgba(26, 71, 128, 0.10);
   --radius: 20px;
   --transition: 0.28s ease-out;
   --danger: #b83b3b;
+  --success: #288c42;
 }
 
 * {
@@ -23,18 +25,25 @@
 }
 
 body {
-  background: var(--bg-color);
+  background: #dde8f5;
   min-height: 100vh;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
   color: var(--text-dark);
-  overflow: hidden;
+  padding: 16px 0;
 }
 
+/* 手机容器，大屏居中模拟手机，小屏撑满 */
 #phone-wrap {
   width: 100%;
-  height: 100vh;
+  max-width: 430px;
+  min-height: 100vh;
+  max-height: 930px;
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
+  background: var(--bg-color);
+  border-radius: 36px;
+  box-shadow: 0 10px 30px rgba(20,40,70,0.15);
 }
 
 .screen {
@@ -46,6 +55,7 @@ body {
   transition: var(--transition);
   padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
   overflow-y: auto;
+  background: var(--bg-color);
 }
 
 .screen.active {
@@ -61,13 +71,14 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(160deg, #dceaf8, #e8f0f9);
+  background: linear-gradient(160deg, #e1edfb, #f0f5fc);
 }
 
 .lock-glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 28px;
   padding: 40px 28px;
   box-shadow: var(--shadow);
@@ -109,12 +120,14 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-top: 20px;
+  padding-top: 54px;
 }
 
 .app-icon {
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  border:1px solid rgba(255,255,255,0.75);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 18px 8px;
@@ -150,12 +163,20 @@ body {
   color: var(--text-light);
 }
 
-/* =====通用页面头部===== */
+/* =====通用页面头部（亮色玻璃栏，不再黑色）===== */
 .page-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-back {
@@ -181,7 +202,7 @@ body {
 .chat-box {
   height: calc(100vh - 140px);
   overflow-y: auto;
-  padding-bottom: 20px;
+  padding: 64px 8px 80px 8px;
 }
 
 .msg-item {
@@ -216,7 +237,7 @@ body {
 }
 
 .msg-other .msg-bubble {
-  background: linear-gradient(130deg, #d7e4f4, #c9daf0);
+  background: linear-gradient(130deg, #e7f0fb, #d9e7f7);
   color: var(--text-dark);
   border-bottom-left-radius: 6px;
 }
@@ -230,17 +251,20 @@ body {
 .input-bar {
   position: absolute;
   bottom: max(14px, env(safe-area-inset-bottom));
-  left: 16px;
-  right: 16px;
+  left: 12px;
+  right: 12px;
   display: flex;
   gap: 10px;
+  padding:8px;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(10px);
+  border-radius:24px;
 }
 
 #chat-input {
   flex: 1;
   border: none;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.85);
   border-radius: 24px;
   padding: 12px 18px;
   font-size: 15px;
@@ -265,15 +289,8 @@ body {
 }
 
 @keyframes dotJump {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
-  }
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 /* =====表单通用样式===== */
@@ -298,6 +315,7 @@ body {
   background: var(--glass-bg);
   backdrop-filter: blur(6px);
   font-size: 15px;
+  border:1px solid rgba(255,255,255,0.7);
 }
 
 .form-item textarea {
@@ -327,6 +345,7 @@ body {
   margin: 10px 0;
   font-size: 14px;
   color: var(--text-light);
+  border:1px solid rgba(255,255,255,0.7);
 }
 
 /* 相册网格 */
@@ -337,9 +356,11 @@ body {
   margin-top: 10px;
 }
 
-.album-grid img {
+.album-item img {
   width: 100%;
   border-radius: 10px;
+  aspect-ratio:1;
+  object-fit:cover;
 }
 
 /* 通话简易UI */
@@ -376,7 +397,7 @@ body {
 }
 
 .btn-ok {
-  background: #288c42;
+  background: var(--success);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -389,87 +410,33 @@ body {
   border-radius: 14px;
   padding: 12px;
   margin: 8px 0;
+  border:1px solid rgba(255,255,255,0.7);
 }
 
+/* 页面内边距适配，避开固定header */
 .screen {
-  display: none;
-  padding: 16px;
-  padding-top: 50px;
-  padding-bottom: 20px;
+  padding-top: 60px;
 }
-.screen.active {
-  display: block;
+
+/* ========== 大屏电脑端额外微调 ========== */
+@media (min-width:768px){
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #phone-wrap{
+    min-height:auto;
+    height:92vh;
+  }
 }
-.page-header {
-  position: fixed;
-  top: env(safe-area-inset-top);
-  left: 0;
-  right: 0;
-  max-width: 430px;
-  margin: 0 auto;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  background: rgba(0,0,0,0.7);
-  z-index: 99;
-  padding: 0 12px;
-}
-.home-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:16px;
-  padding: 60px 20px 20px;
-}
-.app-icon {
-  text-align:center;
-  padding:10px;
-}
-.app-symbol {
-  font-size: 36px;
-  margin-bottom:4px;
-}
-.form-item {
-  margin-bottom:14px;
-}
-.form-item label {
-  display:block;
-  margin-bottom:4px;
-}
-input, textarea, select {
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-.btn-block {
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:10px;
-  border:none;
-}
-.input-bar {
-  display:flex;
-  gap:8px;
-  position:fixed;
-  bottom: env(safe-area-inset-bottom);
-  left:0;
-  right:0;
-  max-width:430px;
-  margin:0 auto;
-  padding:8px 12px;
-  background:#000;
-}
-#chat-box {
-  padding-bottom:70px;
-}
-.album-grid {
-  display:grid;
-  grid-template-columns: repeat(3,1fr);
-  gap:8px;
-}
-.album-item img {
-  width:100%;
-  aspect-ratio:1;
-  object-fit:cover;
+
+/* ========== 小手机（360以下）适配 ========== */
+@media (max-width:360px){
+  .lock-time{
+    font-size:56px;
+  }
+  .home-grid{
+    gap:10px;
+  }
 }
