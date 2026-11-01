@@ -254,7 +254,7 @@ async function fetchAiReply(userInput) {
   }
 
   const resp = await fetch(apiUrl, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${cfg.key}`
